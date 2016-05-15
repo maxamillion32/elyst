@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background Color -->
+    <item android:drawable="@color/colorPrimaryDark" />
+
+    <!-- Icon in the middle -->
+    <item>
+        <bitmap
+            android:src="@drawable/rsz_splash_icon_elyst"
+            android:gravity="center" />
+    </item>
+
+</layer-list>
