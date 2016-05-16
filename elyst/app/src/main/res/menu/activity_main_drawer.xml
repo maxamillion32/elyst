@@ -1,35 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- First Menu: Find Events, Sign Up, Settings -->
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/drawer_find_events"
+            android:icon="@drawable/ic_menu_search"
+            android:title="Find Events" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/drawer_sign_up"
+            android:icon="@drawable/ic_menu_sign_up"
+            android:title="Sign Up" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="Settings" />
     </group>
 
-    <item android:title="Communicate">
+    <!-- User Account Menu -->
+    <item android:title="Account">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/drawer_my_events"
+                android:icon="@drawable/ic_menu_my_events"
+                android:title="My Events" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/drawer_create_event"
+                android:icon="@drawable/ic_menu_add"
+                android:title="Create Event" />
+            <item
+                android:id="@+id/drawer_attending_events"
+                android:icon="@drawable/ic_menu_attending"
+                android:title="Attending Events" />
+            <item
+                android:id="@+id/drawer_watchlist"
+                android:icon="@drawable/ic_menu_watchlist"
+                android:title="Watchlist" />
+            <item
+                android:id="@+id/drawer_account_preferences"
+                android:icon="@drawable/ic_menu_preferences"
+                android:title="Account Preferences" />
+        </menu>
+    </item>
+
+    <!-- Other Information Menu -->
+    <item android:title="App">
+        <menu>
+            <item
+                android:id="@+id/drawer_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="About" />
+            <item
+                android:id="@+id/drawer_rate_us"
+                android:icon="@drawable/ic_menu_rate_us"
+                android:title="Rate Us" />
         </menu>
     </item>
 
