@@ -89,10 +89,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.drawer_create_event) {
 
-        } else if (id == R.id.drawer_attending_events) {
-
-        } else if (id == R.id.drawer_watchlist) {
-
         } else if (id == R.id.drawer_account_preferences) {
 
         } else if (id == R.id.drawer_about) {

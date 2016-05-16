@@ -29,14 +29,6 @@
                 android:icon="@drawable/ic_menu_add"
                 android:title="Create Event" />
             <item
-                android:id="@+id/drawer_attending_events"
-                android:icon="@drawable/ic_menu_attending"
-                android:title="Attending Events" />
-            <item
-                android:id="@+id/drawer_watchlist"
-                android:icon="@drawable/ic_menu_watchlist"
-                android:title="Watchlist" />
-            <item
                 android:id="@+id/drawer_account_preferences"
                 android:icon="@drawable/ic_menu_preferences"
                 android:title="Account Preferences" />
