@@ -23,9 +23,7 @@
 
         <!-- Activity 2 - Main Activity -->
         <activity android:name=".MainActivity">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".FindEventsActivity" />
+            
         </activity>
         <activity
             android:name=".EventDetailsActivity"
