@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only can put one thing in a frame layout - in this
+case we are putting a fragment -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <fragment
+        android:id="@+id/titles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.elystapp.elyst.MyEvents" />
+
+</FrameLayout>
