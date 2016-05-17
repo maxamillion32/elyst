@@ -1,8 +1,19 @@
 <resources>
+
+    <!-- Menu names and App -->
     <string name="app_name">Elyst</string>
+    <string name="menu_app_name">elyst</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Menu Items -->
+    <string name="ui_menu_search">Search</string>
+    <string name="ui_menu_settings">Settings</string>
+    <string name="ui_menu_log_out">Log Out</string>
+
 </resources>

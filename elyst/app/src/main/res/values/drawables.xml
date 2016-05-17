@@ -1,4 +1,8 @@
-<!-- Add here menu icons from the Android Drawable Library -->
+<!-- Add here menu icons from the Android Drawable Library
+     Miscellaneous
+     Events
+     Account
+     Others -->
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item name="ic_menu_camera" type="drawable">@android:drawable/ic_menu_camera</item>
@@ -6,6 +10,8 @@
     <item name="ic_menu_slideshow" type="drawable">@android:drawable/ic_menu_slideshow</item>
     <item name="ic_menu_share" type="drawable">@android:drawable/ic_menu_share</item>
     <item name="ic_menu_send" type="drawable">@android:drawable/ic_menu_send</item>
+    <item name="ic_menu_star" type="drawable">@android:drawable/ic_menu_more</item>
+
 
     <item name="ic_menu_search" type="drawable">@android:drawable/ic_menu_search</item>
     <item name="ic_menu_sign_up" type="drawable">@android:drawable/ic_menu_myplaces</item>
