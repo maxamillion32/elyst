@@ -1,6 +1,8 @@
 package com.elystapp.elyst;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -138,21 +140,44 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent();
 
         if (id == R.id.drawer_find_events) {
+            Intent find = new Intent(MainActivity.this, FindEventsActivity.class);
+            startActivity(find);
 
         } else if (id == R.id.drawer_sign_up) {
 
         } else if (id == R.id.drawer_settings) {
+            Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settings);
 
         } else if (id == R.id.drawer_my_events) {
             intent.setClass(this, MyEvents.class);
             startActivity(intent);
         } else if (id == R.id.drawer_create_event) {
+            Intent create = new Intent(MainActivity.this, CreateEventActivity.class);
+            startActivity(create);
 
         } else if (id == R.id.drawer_account_preferences) {
+            Intent preference = new Intent(MainActivity.this, AccountPreferencesActivity.class);
+            startActivity(preference);
+
 
         } else if (id == R.id.drawer_about) {
+            Intent about_us = new Intent(MainActivity.this, AboutUsActivity.class);
+            startActivity(about_us);
 
         } else if (id == R.id.drawer_rate_us) {
+            Uri uri = Uri.parse("https://play.google.com/store?hl=en" );
+            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+            // To count with Play market backstack, After pressing back button,
+            // to taken back to our application, we need to add following flags to intent.
+            goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            try {
+                startActivity(goToMarket);
+            } catch (ActivityNotFoundException e) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store?hl=en")));
+            }
 
         }
 
