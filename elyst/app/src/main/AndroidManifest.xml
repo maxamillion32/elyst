@@ -22,8 +22,50 @@
         </activity>
 
         <!-- Activity 2 - Main Activity -->
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FindEventsActivity" />
+        </activity>
+        <activity
+            android:name=".EventDetailsActivity"
+            android:label="@string/event_details"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:label="@string/about"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FindEventsActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".CreateEventActivity"
+            android:label="@string/create"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AccountPreferencesActivity"
+            android:label="@string/settings"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name=".AccountPreferencesActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
