@@ -37,6 +37,10 @@ public class FindEventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_events);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.listView);
         postArrayList = new ArrayList<>();
         postArrayList.add(new Post("Music"));
@@ -204,6 +208,10 @@ public class FindEventsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

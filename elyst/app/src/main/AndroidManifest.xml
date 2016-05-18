@@ -47,10 +47,12 @@
         <activity
             android:name=".CreateEventActivity"
             android:label="@string/create"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".AccountPreferencesActivity"
-            android:label="@string/settings"
+            android:label="@string/account_pref"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name=".AccountPreferencesActivity" />

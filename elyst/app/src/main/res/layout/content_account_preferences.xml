@@ -15,8 +15,9 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/textview_width"
+            android:layout_height="@dimen/textview_height"
+            android:textSize="@dimen/font_size"
             android:layout_margin="5dp"
             android:text="@string/name"/>
         <EditText
@@ -26,12 +27,15 @@
             android:layout_margin="5dp"
             android:hint="@string/name_field"
             android:singleLine="true"
+            android:textSize="@dimen/hint_font_size"
+            android:textStyle="italic"
             android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/textview_width"
+            android:layout_height="@dimen/textview_height"
+            android:textSize="@dimen/font_size"
             android:layout_margin="5dp"
             android:text="@string/email" />
         <EditText
@@ -41,12 +45,15 @@
             android:layout_margin="5dp"
             android:hint="@string/email_field"
             android:singleLine="true"
+            android:textSize="@dimen/hint_font_size"
+            android:textStyle="italic"
             android:inputType="textEmailAddress" />
 
         <TextView
             android:id="@+id/phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/textview_width"
+            android:layout_height="@dimen/textview_height"
+            android:textSize="@dimen/font_size"
             android:layout_margin="5dp"
             android:text="@string/phone" />
         <EditText
@@ -56,13 +63,16 @@
             android:layout_margin="5dp"
             android:hint="@string/phone_field"
             android:singleLine="true"
+            android:textStyle="italic"
+            android:textSize="@dimen/hint_font_size"
             android:inputType="phone" />
 
 
         <TextView
             android:id="@+id/gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/textview_width"
+            android:layout_height="@dimen/textview_height"
+            android:textSize="@dimen/font_size"
             android:layout_margin="5dp"
             android:text="@string/gender" />
         <RadioGroup

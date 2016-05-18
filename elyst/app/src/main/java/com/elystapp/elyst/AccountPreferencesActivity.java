@@ -47,7 +47,10 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account_preferences);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //set the callback method for the save method
         Button mSave = (Button) findViewById(R.id.save);
@@ -114,6 +117,10 @@ public class AccountPreferencesActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+    }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 

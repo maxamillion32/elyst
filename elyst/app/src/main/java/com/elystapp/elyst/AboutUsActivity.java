@@ -15,8 +15,16 @@ public class AboutUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_us);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+    }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

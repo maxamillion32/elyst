@@ -21,6 +21,10 @@ public class CreateEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         context=this;
         EditText title = (EditText) findViewById(R.id.entered_title);
         EditText location = (EditText) findViewById(R.id.entered_location);
@@ -47,6 +51,10 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }
