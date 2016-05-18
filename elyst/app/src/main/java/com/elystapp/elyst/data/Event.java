@@ -1,33 +1,41 @@
 package com.elystapp.elyst.data;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
+
 
 /**
  * Created by roxanagheorghe on 5/18/16.
  */
 public class Event {
 
+    /**
+     * Field for the event
+     */
     private Integer eImage;
     private String eTitle;
-    private Date eDate;
+    private Calendar eDate;
     private Time eTime;
     private String eLocation;
     private String eDescription;
     private Double eCost;
     private Integer ID;
-    //private Host eHost;
+    // private Host eHost;
+
+    // Helping Fields
+    private LatLng locationGPS;
 
     public Event(){
-        this.eImage=-1;
-        this.eTitle="";
-        this.eDate= Calendar.getInstance().getTime();
-        this.eTime=(Time)Calendar.getInstance().getTime();
-        this.eLocation="";
-        this.eDescription="";
-        this.eCost=0.0d;
-        this.ID=-1;
+        this.eImage = -1;
+        this.eTitle = "";
+        this.eDate  = Calendar.getInstance();
+        this.eTime  = (Time)Calendar.getInstance().getTime();
+        this.eLocation  =   "";
+        this.eDescription   =   "";
+        this.eCost  =   0.0d;
+        this.ID =   -1;
     }
 
     public Integer getImage() {
@@ -46,12 +54,16 @@ public class Event {
         this.eTitle = eTitle;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return eDate;
     }
 
-    public void setDate(Date eDate) {
+    public void setDate(Calendar eDate) {
         this.eDate = eDate;
+    }
+
+    public long geteDateInMillis() {
+        return eDate.getTimeInMillis();
     }
 
     public Time geteTime() {
@@ -60,6 +72,18 @@ public class Event {
 
     public void seteTime(Time eTime) {
         this.eTime = eTime;
+    }
+
+    // Set the Date
+    public void setDate(int year, int monthOfYear, int dayOfMonth) {
+        eDate.set(year, monthOfYear, dayOfMonth);
+    }
+
+    // Set the Time
+    public void setTime(int hourOfDay, int minute) {
+        eDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        eDate.set(Calendar.MINUTE, minute);
+        eDate.set(Calendar.SECOND, 0);
     }
 
     public String getLocation() {
