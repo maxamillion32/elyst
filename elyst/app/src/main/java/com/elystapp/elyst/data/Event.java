@@ -118,5 +118,11 @@ public class Event {
         this.ID = ID;
     }
 
+    public double generateID(long date, long time, double lat, double lon) {
+        double resultID = 0.0;
+
+        return resultID;
+    }
+
 
 }
