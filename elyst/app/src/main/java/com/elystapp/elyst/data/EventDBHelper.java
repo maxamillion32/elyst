@@ -18,21 +18,21 @@ public class EventDBHelper extends SQLiteOpenHelper{
     // Declare all the keys here with their associated values
     public static final String KEY_IMAGE    = "event_image";
     public static final String KEY_TITLE    = "event_title";
-    public static final String KEY_DATE     = "event_date";
-    public static final String KEY_TIME     = "event_time";
+    public static final String KEY_DATE_TIME= "event_date_time";
     public static final String KEY_LOCATION = "event_location";
     public static final String KEY_COORDS   = "event_coordinates";
     public static final String KEY_COST     = "event_cost";
     public static final String KEY_ID       = "event_id";
     public static final String KEY_HOST     = "event_host";
     public static final String KEY_ROW_ID   = "event_row_id";
+    public static final String KEY_DESCRIPTION    = "event_description";
     public static final String TABLE_NAME_ENTRIES = "entries";
 
 
 
     private static final String[] fieldsList = {KEY_COORDS, KEY_COST,
-                    KEY_DATE, KEY_HOST, KEY_ID, KEY_IMAGE, KEY_LOCATION,
-                    KEY_TIME, KEY_ROW_ID, KEY_TITLE};
+                    KEY_DATE_TIME, KEY_HOST, KEY_ID, KEY_IMAGE, KEY_LOCATION,
+                    KEY_ROW_ID, KEY_TITLE, KEY_DESCRIPTION};
 
     // Database Fields
     private static final String DATABASE_NAME = "EventDatabase";
@@ -42,11 +42,11 @@ public class EventDBHelper extends SQLiteOpenHelper{
             + KEY_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_IMAGE + " INTEGER NOT NULL, "
             + KEY_TITLE + " INTEGER NOT NULL, "
-            + KEY_DATE + " DATETIME NOT NULL, "
-            + KEY_TIME + " LONG NOT NULL, "
+            + KEY_DATE_TIME + " DATETIME NOT NULL, "
             + KEY_LOCATION + " INTEGER NOT NULL, "
             + KEY_COORDS + " DOUBLE NOT NULL, "
             + KEY_COST + " DOUBLE NOT NULL, "
+            + KEY_DESCRIPTION + " TEXT, "
             + KEY_ID + " LONG NOT NULL, "
             + KEY_HOST + " BLOB, " + ");";
 
@@ -73,11 +73,12 @@ public class EventDBHelper extends SQLiteOpenHelper{
         ContentValues value = new ContentValues();
         value.put(KEY_IMAGE, event.getImage());
         value.put(KEY_TITLE, event.getTitle());
-        value.put(KEY_DATE, event.geteDateInMillis());
+        value.put(KEY_DATE_TIME, event.geteDateTimeInMillis());
         // value.put(KEY_TIME, event.geteTimeInMillis());
         value.put(KEY_LOCATION, event.getLocation());
         value.put(KEY_COORDS, event.getLocation());
         value.put(KEY_COST, event.getCost());
+        value.put(KEY_DESCRIPTION, event.getDescription());
         value.put(KEY_ID, event.getID());
         // value.put(KEY_HOST, event.getHost());
 
@@ -133,11 +134,12 @@ public class EventDBHelper extends SQLiteOpenHelper{
         Event tempEvent = new Event();
 
         // Set all the value according to our field
-        tempEvent.setImage(cursor.getInt(cursor.getColumnIndex()));
-        tempEvent.setTitle();
-        tempEvent.setDate();
-        tempEvent.setDescription();
-        tempEvent.setCost();
+
+        tempEvent.setImage(cursor.getInt(cursor.getColumnIndex(KEY_IMAGE)));
+        tempEvent.setTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
+        tempEvent.setDate(cursor.getLong(cursor.getColumnIndex(KEY_DATE_TIME)));
+        tempEvent.setDescription(cursor.getString((cursor.getColumnIndex(KEY_DESCRIPTION))));
+        tempEvent.setCost(cursor.getDouble(cursor.getColumnIndex(KEY_COST)));
         // tempEvent.setLocation();
         // tempEvent.setCoordinates();
         // tempEvent.setHost();

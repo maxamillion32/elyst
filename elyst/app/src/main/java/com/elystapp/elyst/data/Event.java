@@ -1,6 +1,6 @@
 package com.elystapp.elyst.data;
 
-import com.google.android.gms.maps.model.LatLng;
+import android.location.Address;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -27,7 +27,7 @@ public class Event {
     // private Host eHost;
 
     // Helping Fields
-    private LatLng locationGPS;
+    private Address locationGPS;
 
     public Event(){
         this.eImage = -1;
