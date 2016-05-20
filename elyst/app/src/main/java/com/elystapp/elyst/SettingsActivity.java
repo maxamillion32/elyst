@@ -15,15 +15,15 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-//        toolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.pref_content, new MyPreferenceFragment()).commit();
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment
@@ -35,6 +35,10 @@ public class SettingsActivity extends AppCompatActivity {
             addPreferencesFromResource(R.xml.preference);
 
         }
+    }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 
