@@ -109,6 +109,11 @@
                 android:text="@string/cancel"
                 android:layout_weight="1.0" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/save_event"/>
     </LinearLayout>
 </ScrollView>
 

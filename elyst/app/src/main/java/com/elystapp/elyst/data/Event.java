@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 /**
  * Created by roxanagheorghe on 5/18/16.
+ *
  */
 public class Event {
 
