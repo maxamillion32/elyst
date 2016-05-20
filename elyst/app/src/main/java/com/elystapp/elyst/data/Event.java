@@ -24,7 +24,7 @@ public class Event {
     private String eDescription;
     private Double eCost;
     private Integer ID;
-    // private Host eHost;
+    private Host eHost;
 
     // Helping Fields
     private Address locationGPS;
@@ -37,6 +37,7 @@ public class Event {
         this.eDescription   =   "";
         this.eCost  =   0.0d;
         this.ID =   -1;
+        this.eHost= new Host();
     }
 
     public Integer getImage() {
@@ -124,4 +125,11 @@ public class Event {
     }
 
 
+    public Host geteHost() {
+        return eHost;
+    }
+
+    public void seteHost(Host eHost) {
+        this.eHost = eHost;
+    }
 }

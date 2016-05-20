@@ -137,7 +137,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
 
         tempEvent.setImage(cursor.getInt(cursor.getColumnIndex(KEY_IMAGE)));
         tempEvent.setTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
-        tempEvent.setDate(cursor.getLong(cursor.getColumnIndex(KEY_DATE_TIME)));
+        tempEvent.setDateTimeInMillis(cursor.getLong(cursor.getColumnIndex(KEY_DATE_TIME)));
         tempEvent.setDescription(cursor.getString((cursor.getColumnIndex(KEY_DESCRIPTION))));
         tempEvent.setCost(cursor.getDouble(cursor.getColumnIndex(KEY_COST)));
         // tempEvent.setLocation();
