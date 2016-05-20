@@ -1,9 +1,7 @@
 package com.elystapp.elyst;
 
 import android.os.Bundle;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 

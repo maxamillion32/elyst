@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Created by ERNEL on 5/20/2016.
+ *
  */
 public class EventDBHelper extends SQLiteOpenHelper{
 
@@ -135,7 +136,6 @@ public class EventDBHelper extends SQLiteOpenHelper{
         tempEvent.setImage(cursor.getInt(cursor.getColumnIndex()));
         tempEvent.setTitle();
         tempEvent.setDate();
-        tempEvent.seteTime();
         tempEvent.setDescription();
         tempEvent.setCost();
         // tempEvent.setLocation();
