@@ -20,7 +20,8 @@ public class EventDBHelper extends SQLiteOpenHelper{
     public static final String KEY_TITLE    = "event_title";
     public static final String KEY_DATE_TIME= "event_date_time";
     public static final String KEY_LOCATION = "event_location";
-    public static final String KEY_COORDS   = "event_coordinates";
+    public static final String KEY_LATITUDE = "event_latitude";
+    public static final String KEY_LONGITUDE= "event_longitude";
     public static final String KEY_COST     = "event_cost";
     public static final String KEY_ID       = "event_id";
     public static final String KEY_HOST     = "event_host";
@@ -30,21 +31,22 @@ public class EventDBHelper extends SQLiteOpenHelper{
 
 
 
-    private static final String[] fieldsList = {KEY_COORDS, KEY_COST,
+    private static final String[] fieldsList = {KEY_LATITUDE, KEY_COST,
                     KEY_DATE_TIME, KEY_HOST, KEY_ID, KEY_IMAGE, KEY_LOCATION,
-                    KEY_ROW_ID, KEY_TITLE, KEY_DESCRIPTION};
+                    KEY_ROW_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_LONGITUDE};
 
     // Database Fields
     private static final String DATABASE_NAME = "EventDatabase";
     private static final int DATABASE_VERSION = 1;
-    private static final String CREAT_TABLE_ENTRIES = "CREATE TABLE IF NOT EXIST "
+    private static final String CREATE_TABLE_ENTRIES = "CREATE TABLE IF NOT EXIST "
             + TABLE_NAME_ENTRIES + " ("
             + KEY_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_IMAGE + " INTEGER NOT NULL, "
             + KEY_TITLE + " INTEGER NOT NULL, "
             + KEY_DATE_TIME + " DATETIME NOT NULL, "
             + KEY_LOCATION + " INTEGER NOT NULL, "
-            + KEY_COORDS + " DOUBLE NOT NULL, "
+            + KEY_LATITUDE + " DOUBLE NOT NULL, "
+            + KEY_LONGITUDE + " DOUBLE NOT NULL, "
             + KEY_COST + " DOUBLE NOT NULL, "
             + KEY_DESCRIPTION + " TEXT, "
             + KEY_ID + " LONG NOT NULL, "
@@ -58,7 +60,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create the table following the format defined above
-        db.execSQL(CREAT_TABLE_ENTRIES);
+        db.execSQL(CREATE_TABLE_ENTRIES);
     }
 
     @Override
@@ -74,9 +76,9 @@ public class EventDBHelper extends SQLiteOpenHelper{
         value.put(KEY_IMAGE, event.getImage());
         value.put(KEY_TITLE, event.getTitle());
         value.put(KEY_DATE_TIME, event.geteDateTimeInMillis());
-        // value.put(KEY_TIME, event.geteTimeInMillis());
         value.put(KEY_LOCATION, event.getLocation());
-        value.put(KEY_COORDS, event.getLocation());
+        value.put(KEY_LATITUDE, event.getLocation());
+        value.put(KEY_LONGITUDE, event.getLocation());
         value.put(KEY_COST, event.getCost());
         value.put(KEY_DESCRIPTION, event.getDescription());
         value.put(KEY_ID, event.getID());
@@ -140,8 +142,9 @@ public class EventDBHelper extends SQLiteOpenHelper{
         tempEvent.setDateTimeInMillis(cursor.getLong(cursor.getColumnIndex(KEY_DATE_TIME)));
         tempEvent.setDescription(cursor.getString((cursor.getColumnIndex(KEY_DESCRIPTION))));
         tempEvent.setCost(cursor.getDouble(cursor.getColumnIndex(KEY_COST)));
-        // tempEvent.setLocation();
-        // tempEvent.setCoordinates();
+        tempEvent.setGPS(cursor.getDouble(cursor.getColumnIndex(KEY_LATITUDE)),
+                         cursor.getDouble(cursor.getColumnIndex(KEY_LONGITUDE)));
+
         // tempEvent.setHost();
 
         return tempEvent;

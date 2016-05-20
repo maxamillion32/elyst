@@ -2,10 +2,7 @@ package com.elystapp.elyst.data;
 
 import android.location.Address;
 
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 
 /**
@@ -93,6 +90,13 @@ public class Event {
     public void setLocation(String eLocation) {
         this.eLocation = eLocation;
     }
+
+    public void setGPS(double lat, double lon) {
+        locationGPS.setLatitude(lat);
+        locationGPS.setLongitude(lon);
+    }
+
+    public Address getGPS() { return locationGPS; }
 
     public String getDescription() {
         return eDescription;
