@@ -84,7 +84,7 @@ public class HostDBHelper extends SQLiteOpenHelper{
     }
 
     // Query a specific entry by its index
-    public Host fetchEventByIndex(long rowID) throws SQLException {
+    public Host fetchHostByIndex(long rowID) throws SQLException {
 
         SQLiteDatabase liteDatabase = getReadableDatabase();
         Cursor tempCursor = liteDatabase.query(true, TABLE_NAME_ENTRIES, fieldsList, KEY_ROW_ID + rowID,
@@ -133,4 +133,4 @@ public class HostDBHelper extends SQLiteOpenHelper{
 
     }
 }
-}
+
