@@ -24,18 +24,16 @@ public class EventDBHelper extends SQLiteOpenHelper{
     public static final String KEY_LONGITUDE= "event_longitude";
     public static final String KEY_COST     = "event_cost";
     public static final String KEY_ID       = "event_id";
+    public static final String KEY_HOST     = "event_host";
     public static final String KEY_ROW_ID   = "event_row_id";
     public static final String KEY_DESCRIPTION    = "event_description";
-    public static final String KEY_HOST_ID  = "event_host_id";
     public static final String TABLE_NAME_ENTRIES = "entries";
-
-    Context con;
 
 
 
     private static final String[] fieldsList = {KEY_LATITUDE, KEY_COST,
-                    KEY_DATE_TIME, KEY_ID, KEY_IMAGE, KEY_LOCATION, KEY_ROW_ID,
-                    KEY_TITLE, KEY_DESCRIPTION, KEY_LONGITUDE, KEY_HOST_ID};
+                    KEY_DATE_TIME, KEY_HOST, KEY_ID, KEY_IMAGE, KEY_LOCATION,
+                    KEY_ROW_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_LONGITUDE};
 
     // Database Fields
     private static final String DATABASE_NAME = "EventDatabase";
@@ -52,12 +50,11 @@ public class EventDBHelper extends SQLiteOpenHelper{
             + KEY_COST + " DOUBLE NOT NULL, "
             + KEY_DESCRIPTION + " TEXT, "
             + KEY_ID + " LONG NOT NULL, "
-            + KEY_HOST_ID + " BLOB, " + ");";
+            + KEY_HOST + " BLOB, " + ");";
 
     // Constructor
     public EventDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        con = context;
     }
 
     @Override
@@ -85,7 +82,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
         value.put(KEY_COST, event.getCost());
         value.put(KEY_DESCRIPTION, event.getDescription());
         value.put(KEY_ID, event.getID());
-        value.put(KEY_HOST_ID, event.getHost().getUser_ID());
+        // value.put(KEY_HOST, event.getHost());
 
         SQLiteDatabase liteDatabase = getWritableDatabase();
         long entry = liteDatabase.insert(TABLE_NAME_ENTRIES, null, value);
@@ -137,7 +134,6 @@ public class EventDBHelper extends SQLiteOpenHelper{
     private Event cursorToEntry(Cursor cursor, boolean bool) {
 
         Event tempEvent = new Event();
-        HostDBHelper hDB = new HostDBHelper(con);
 
         // Set all the value according to our field
 
@@ -147,12 +143,9 @@ public class EventDBHelper extends SQLiteOpenHelper{
         tempEvent.setDescription(cursor.getString((cursor.getColumnIndex(KEY_DESCRIPTION))));
         tempEvent.setCost(cursor.getDouble(cursor.getColumnIndex(KEY_COST)));
         tempEvent.setGPS(cursor.getDouble(cursor.getColumnIndex(KEY_LATITUDE)),
-                cursor.getDouble(cursor.getColumnIndex(KEY_LONGITUDE)));
+                         cursor.getDouble(cursor.getColumnIndex(KEY_LONGITUDE)));
 
-        String hostID = cursor.getString(cursor.getColumnIndex(KEY_HOST_ID));
-        Host host = hDB.fetchHostByIndex(Long.valueOf(hostID));
-        tempEvent.setHost(host);
-
+        // tempEvent.setHost();
 
         return tempEvent;
 

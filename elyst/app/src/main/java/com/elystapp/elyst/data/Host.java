@@ -1,7 +1,7 @@
 package com.elystapp.elyst.data;
 
 /**
- * Created by Roxana Gheorghe on 5/20/16.
+ * Created by roxanagheorghe on 5/20/16.
  *
  */
 public class Host {

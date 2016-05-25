@@ -37,6 +37,12 @@ public class MyEvents extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Could do something here
+            }
+        });
 
         // Match the XML files to the proper tabs
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
@@ -91,10 +97,6 @@ public class MyEvents extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 
 }

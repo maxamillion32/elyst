@@ -129,11 +129,11 @@ public class Event {
     }
 
 
-    public Host getHost() {
+    public Host geteHost() {
         return eHost;
     }
 
-    public void setHost(Host eHost) {
+    public void seteHost(Host eHost) {
         this.eHost = eHost;
     }
 }
