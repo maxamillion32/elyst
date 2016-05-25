@@ -19,7 +19,6 @@ public class HostDBHelper extends SQLiteOpenHelper{
     public static final String KEY_PASSWORD= "host_password";
     public static final String KEY_NAME    = "host_name";
     public static final String KEY_EMAIL   = "host_email";
-    public static final String KEY_PHONE   = "host_phone";
     public static final String KEY_IMAGE   = "host_image";
 
     public static final String KEY_ROW_ID  = "_id";
@@ -27,7 +26,7 @@ public class HostDBHelper extends SQLiteOpenHelper{
 
 
     private static final String[] fieldsList = {KEY_NAME, KEY_EMAIL,
-            KEY_PHONE, KEY_ROW_ID, KEY_USER_ID, KEY_PASSWORD, KEY_IMAGE};
+            KEY_ROW_ID, KEY_USER_ID, KEY_PASSWORD, KEY_IMAGE};
 
     // Database Fields
     private static final String DATABASE_NAME = "HostDatabase";
@@ -39,7 +38,6 @@ public class HostDBHelper extends SQLiteOpenHelper{
             + KEY_PASSWORD + " STRING NOT NULL, "
             + KEY_NAME + " STRING NOT NULL, "
             + KEY_EMAIL + " STRING NOT NULL, "
-            + KEY_PHONE + " STRING NOT NULL, "
             + KEY_IMAGE + " INTEGER NOT NULL, "+ ");";
 
     // Constructor
@@ -67,7 +65,6 @@ public class HostDBHelper extends SQLiteOpenHelper{
         value.put(KEY_EMAIL, host.getEmail());
         value.put(KEY_NAME, host.getName());
         value.put(KEY_PASSWORD, host.getPassword());
-        value.put(KEY_PHONE, host.getPhone());
         value.put(KEY_USER_ID, host.getUser_ID());
 
         SQLiteDatabase liteDatabase = getWritableDatabase();
@@ -127,7 +124,6 @@ public class HostDBHelper extends SQLiteOpenHelper{
         tempHost.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
         tempHost.setUser_ID(cursor.getString(cursor.getColumnIndex(KEY_USER_ID)));
         tempHost.setPassword(cursor.getString((cursor.getColumnIndex(KEY_PASSWORD))));
-        tempHost.setPhone(cursor.getLong(cursor.getColumnIndex(KEY_PHONE)));
 
         return tempHost;
 

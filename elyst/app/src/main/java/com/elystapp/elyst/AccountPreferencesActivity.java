@@ -90,7 +90,6 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.prefs_file), 0).edit();
         editor.putString(getString(R.string.pref_name), ((EditText) findViewById(R.id.enteredName)).getText().toString());
         editor.putString(getString(R.string.pref_email), ((EditText) findViewById(R.id.enteredEmail)).getText().toString());
-        editor.putString(getString(R.string.pref_phone), ((EditText) findViewById(R.id.enteredPhone)).getText().toString());
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.chooseGender);
         editor.putInt(getString(R.string.pref_gender), radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId())));
         editor.apply();
@@ -103,7 +102,6 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.prefs_file), 0);
         ((EditText) findViewById(R.id.enteredName)).setText(prefs.getString(getString(R.string.pref_name), BuildConfig.FLAVOR));
         ((EditText) findViewById(R.id.enteredEmail)).setText(prefs.getString(getString(R.string.pref_email), BuildConfig.FLAVOR));
-        ((EditText) findViewById(R.id.enteredPhone)).setText(prefs.getString(getString(R.string.pref_phone), BuildConfig.FLAVOR));
         int int_val = prefs.getInt(getString(R.string.pref_gender), -1);
         if (int_val >= 0) {
             ((RadioButton) ((RadioGroup) findViewById(R.id.chooseGender)).getChildAt(int_val)).setChecked(true);
