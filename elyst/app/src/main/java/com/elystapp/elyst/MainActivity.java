@@ -12,27 +12,34 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.elystapp.elyst.views.CustomAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "holla";
+
     // Arrays of events
-    String[] eventName = {
-            "Yoga",
-            "Booze Cruise",
-            "Wine Tasting",
-            "Club Dance"
+    String[][] eventName = {
+            {"Yoga", "12:30 PM", "The River", "Wednesday 05/26"},
+            {"Booze Cruise", "8:00 AM", "35 West Street, Hanover NH", "05/28/2016"},
+            {"Wine Tasting", "3:30 PM", "Pine, Hanover", "Thursday"},
+            {"Club Dance", "midnight", "GDX", "Saturday Night"}
     };
 
     Integer[] imageArray = {
             R.drawable.activity_one,
-            R.drawable.activity_one,
-            R.drawable.activity_one,
-            R.drawable.activity_one,
+            R.drawable.activity_two,
+            R.drawable.activity_three,
+            R.drawable.activity_four,
 
     };
 
@@ -69,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //============================== LIST ITEMS ====================================
-        /**
+
         CustomAdapter adapter = new CustomAdapter(this, eventName, imageArray);
         ListView list = (ListView) findViewById(R.id.list_events);
         list.setAdapter(adapter);
@@ -80,12 +87,13 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // TODO Auto-generated method stub
-                String Slecteditem = eventName[+position];
+                String Slecteditem = eventName[+position][1];
+                Log.d(TAG, "Within item click");
                 Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
 
             }
         });
-        **/
+
     }
 
     @Override

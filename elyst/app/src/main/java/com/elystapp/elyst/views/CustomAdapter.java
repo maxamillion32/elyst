@@ -1,6 +1,7 @@
 package com.elystapp.elyst.views;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,34 +17,30 @@ import com.elystapp.elyst.R;
  */
 public class CustomAdapter extends ArrayAdapter<String> {
 
+    private static final String TAG = "holla";
+
     private Activity context;
-    private String[] events;
+    private String[][] events;
     private Integer[] images;
 
     public CustomAdapter(Activity active,
-                         String[] names, Integer[] draws) {
-        super(active, R.layout.custom_list, names);
+                         String[][] names, Integer[] draws) {
+        super(active, R.layout.custom_list, names[1]);
         events = names;
         images = draws;
         context = active;
     }
 
 
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
+        Log.d(TAG, "After inflater");
+
         View rowView = inflater.inflate(R.layout.custom_list, null, true);
+
+        Log.d(TAG, "After inflation");
+
 
         ImageView imageView;
         TextView title;
@@ -54,15 +51,16 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
         imageView = (ImageView) rowView.findViewById(R.id.image_event);
         title = (TextView) rowView.findViewById(R.id.title_event);
-        // holder.date = (TextView) rowView.findViewById(R.id.date_event);
-        // holder.time = (TextView) rowView.findViewById(R.id.time);
+        date = (TextView) rowView.findViewById(R.id.date_event);
+        time = (TextView) rowView.findViewById(R.id.time_event);
         address = (TextView) rowView.findViewById(R.id.address_event);
 
         imageView.setImageResource(images[position]);
-        title.setText(events[position]);
-        // time.setText(events[position]);
-        // date.setText(events[position]);
-        address.setText(events[position]);
+        title.setText(events[position][0]);
+        time.setText(events[position][1]);
+        address.setText(events[position][2]);
+        date.setText(events[position][3]);
+
 
         return rowView;
 
