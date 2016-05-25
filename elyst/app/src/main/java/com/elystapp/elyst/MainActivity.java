@@ -20,6 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import com.elystapp.elyst.views.CustomAdapter;
 
 public class MainActivity extends AppCompatActivity
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity
         myToolbar.setLogo(getResources().getDrawable(R.drawable.rsz_splash_icon_elyst));
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
         // Floating Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_add_event);
@@ -152,6 +159,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(find);
 
         } else if (id == R.id.drawer_sign_up) {
+            Intent sign_up =new Intent(MainActivity.this, SignUpActivity.class);
+            startActivity(sign_up);
 
         } else if (id == R.id.drawer_settings) {
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);

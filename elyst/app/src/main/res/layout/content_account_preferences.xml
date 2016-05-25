@@ -49,24 +49,6 @@
             android:textStyle="italic"
             android:inputType="textEmailAddress" />
 
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="@dimen/textview_width"
-            android:layout_height="@dimen/textview_height"
-            android:textSize="@dimen/font_size"
-            android:layout_margin="5dp"
-            android:text="@string/phone" />
-        <EditText
-            android:id="@+id/enteredPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="@string/phone_field"
-            android:singleLine="true"
-            android:textStyle="italic"
-            android:textSize="@dimen/hint_font_size"
-            android:inputType="phone" />
-
 
         <TextView
             android:id="@+id/gender"

@@ -8,7 +8,6 @@ public class Host {
 
     private String name;
     private String email;
-    private Long phone;
     private String user_ID;
     private String password;
     private Integer image;
@@ -17,7 +16,6 @@ public class Host {
     public  Host(){
         this.name="";
         this.email="";
-        this.phone=-1L;
         this.user_ID="";
         this.password="";
         this.image= -1;
@@ -38,14 +36,6 @@ public class Host {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Long phone) {
-        this.phone = phone;
     }
 
 
