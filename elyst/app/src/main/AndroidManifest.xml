@@ -81,7 +81,8 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- Activity 3 - My Events -->
         <activity android:name=".MyEvents" />
