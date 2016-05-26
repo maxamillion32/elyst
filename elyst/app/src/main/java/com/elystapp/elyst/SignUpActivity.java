@@ -53,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
     Host current_host;
+    String postId="";
 
 
     @Override
@@ -79,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email", "public_profile", "name");
+        loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -89,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                Log.d("fb sing in", "facebook:onCancel");
+                Log.d("fb sign in", "facebook:onCancel");
                 // ...
             }
 
@@ -138,7 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
                     current_host.setPassword(passwordtxt);
                     DatabaseReference newRef =myRef.push();
                     newRef.setValue(current_host);
-                    String postId=newRef.getKey();
+                    postId=newRef.getKey();
 
                     // Save new user data into
                     mAuth.createUserWithEmailAndPassword(emailtxt, passwordtxt)
@@ -158,21 +159,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 }
                             });
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    if (user != null) {
-                        // Name, email address, and profile photo Url
-                        String name = user.getDisplayName();
-                        String email = user.getEmail();
 
-                        // The user's ID, unique to the Firebase project. Do NOT use this value to
-                        // authenticate with your backend server, if you have one. Use
-                        // FirebaseUser.getToken() instead.
-                        Log.d("signedin",name);
-                        Log.d("signedin",email);
-                        String uid = user.getUid();
-                        current_host.setUser_ID(uid);
-                        myRef.child(postId).child("user_ID").setValue(uid);
-                    }
+
                 }
             }
         });
@@ -187,6 +175,12 @@ public class SignUpActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d("signup", "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    current_host.setUser_ID(user.getUid());
+                    if(!postId.equals("")) {
+                        myRef.child(postId).child("user_ID").setValue(user.getUid());
+                    }
+
                 } else {
                     // User is signed out
                     Log.d("signup", "onAuthStateChanged:signed_out");
