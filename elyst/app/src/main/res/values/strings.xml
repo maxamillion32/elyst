@@ -80,5 +80,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="date">Date</string>
     <string name="ok">OK</string>
+    <string name="event_cost">Cost</string>
+    <string name="guests">Guests</string>
 
 </resources>

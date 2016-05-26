@@ -1,6 +1,13 @@
 package com.elystapp.elyst.data;
 
+import android.content.Intent;
 import android.location.Address;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.elystapp.elyst.Constants;
+import com.elystapp.elyst.CreateEventActivity;
+import com.elystapp.elyst.GeocodeAddressIntentService;
 
 import java.util.Calendar;
 
@@ -20,11 +27,12 @@ public class Event {
     private String eLocation;
     private String eDescription;
     private Double eCost;
-    private Integer ID;
+    private Integer eGuests;
+    private String ID;
     private Host eHost;
 
     // Helping Fields
-    private Address locationGPS;
+    private Address GPS;
 
     public Event(){
         this.eImage = -1;
@@ -33,8 +41,10 @@ public class Event {
         this.eLocation  =   "";
         this.eDescription   =   "";
         this.eCost  =   0.0d;
-        this.ID =   -1;
+        this.eGuests=0;
+        this.ID = "";
         this.eHost= new Host();
+        this.GPS=null;
     }
 
     public Integer getImage() {
@@ -92,11 +102,12 @@ public class Event {
     }
 
     public void setGPS(double lat, double lon) {
-        locationGPS.setLatitude(lat);
-        locationGPS.setLongitude(lon);
+        GPS.setLatitude(lat);
+        GPS.setLongitude(lon);
     }
 
-    public Address getGPS() { return locationGPS; }
+
+    public Address getGPS() { return GPS; }
 
     public String getDescription() {
         return eDescription;
@@ -114,11 +125,11 @@ public class Event {
         this.eCost = eCost;
     }
 
-    public Integer getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(Integer ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
@@ -135,5 +146,17 @@ public class Event {
 
     public void seteHost(Host eHost) {
         this.eHost = eHost;
+    }
+
+    public Integer getGuests() {
+        return eGuests;
+    }
+
+    public void setGuests(Integer eGuests) {
+        this.eGuests = eGuests;
+    }
+
+    public void setLocationGPS(Address locationGPS) {
+        this.GPS = locationGPS;
     }
 }
