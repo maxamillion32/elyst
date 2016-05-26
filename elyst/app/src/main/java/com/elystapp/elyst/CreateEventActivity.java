@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.elystapp.elyst.data.Event;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
 
@@ -41,6 +43,10 @@ public class CreateEventActivity extends AppCompatActivity {
     // Write a message to the database
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
+    FirebaseStorage mStorage;
+    StorageReference storageRef;
+    StorageReference imageRef;
+
     //the event being created
     static Event current_event ;
 
@@ -78,6 +84,12 @@ public class CreateEventActivity extends AppCompatActivity {
         current_event = new Event();
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("events");
+
+        // Storage Initiation
+        mStorage = FirebaseStorage.getInstance();
+        storageRef = mStorage.getReferenceFromUrl("gs://project-2202364803731929525.appspot.com");
+        imageRef = storageRef.child("Images");
+        imageRef = storageRef.child("Images/host");
         mResultReceiver = new AddressResultReceiver(null);
         context=this;
         fetchType = Constants.USE_ADDRESS_NAME;
@@ -87,8 +99,7 @@ public class CreateEventActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                updateAddress();
                 DatabaseReference newRef =myRef.push();
                 newRef.setValue(current_event);
                 String postId=newRef.getKey();
@@ -123,7 +134,7 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 LocationFragment loc = new LocationFragment();
                 loc.show(getSupportFragmentManager(),"location");
-                updateAddress();
+
             }
         });
         date_view=(TextView)findViewById(R.id.date_event);
@@ -164,7 +175,7 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DescriptionFragment desc = new DescriptionFragment();
-                desc.show(getSupportFragmentManager(),"description");
+                desc.show(getSupportFragmentManager(), "description");
             }
         });
 
@@ -452,6 +463,8 @@ public class CreateEventActivity extends AppCompatActivity {
                             final String location_input = et1.getText().toString();
 
                             current_event.setLocation(location_input);
+                            location_text="Location: "+ location_input;
+                            location_view.setText(location_text);
 
 
 
