@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "329544196375",
-    "firebase_url": "https://project-2202364803731929525.firebaseio.com",
-    "project_id": "project-2202364803731929525",
-    "storage_bucket": "project-2202364803731929525.appspot.com"
+    "project_number": "1093588682492",
+    "firebase_url": "https://project-1360583783094255069.firebaseio.com",
+    "project_id": "project-1360583783094255069",
+    "storage_bucket": "project-1360583783094255069.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:329544196375:android:13c11cf2e31310a7",
+        "mobilesdk_app_id": "1:1093588682492:android:13c11cf2e31310a7",
         "android_client_info": {
           "package_name": "com.elystapp.elyst"
         }
       },
       "oauth_client": [
         {
-          "client_id": "329544196375-aprl2fuc2l2n1rcli1b3lsgbi6u2of46.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.elystapp.elyst",
-            "certificate_hash": "8561B8B4235381EA449E1B5D57F55C3845F006B3"
-          }
-        },
-        {
-          "client_id": "329544196375-0uphh9mmn5eu2a0thc14rbes104v33oc.apps.googleusercontent.com",
+          "client_id": "1093588682492-rn4ve37aia7rag04mfig00vf98vjsc49.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCaugB2H2jACLqD7uOiS2S6rskMXWZQ_m8"
+          "current_key": "AIzaSyCq3qSyOGuwQojPhWNyLzcyOyLuRIPmrzM"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "329544196375-0uphh9mmn5eu2a0thc14rbes104v33oc.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
