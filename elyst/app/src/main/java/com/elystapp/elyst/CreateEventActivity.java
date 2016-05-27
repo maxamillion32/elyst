@@ -4,15 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +30,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -33,7 +41,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -50,7 +65,7 @@ public class CreateEventActivity extends AppCompatActivity {
     //the event being created
     static Event current_event ;
 
-
+    public static String TAG = "yolo";
 
     public static String title_text="Title";
     public static String location_text="Location";
@@ -68,6 +83,19 @@ public class CreateEventActivity extends AppCompatActivity {
     public static TextView cost_view;
     public static TextView guest_view;
     public static TextView description_view;
+    public static ImageView event_photo;
+
+    // For permissions
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    public static final int REQUEST_CODE_TAKE_FROM_GALLERY = 1;
+    private static final String IMAGE_UNSPECIFIED = "image/*";
+    private static final String URI_INSTANCE_STATE_KEY = "Uri_Save";
+    private static final String URI_INSTANCE_TEMP_KEY = "Uri_Temp";
+
+    // Uri addresses for temporary and permanent save
+    private Uri mImageCaptureUri;
+    private Uri mImageTemporal;
+
 
 
     @Override
@@ -85,14 +113,36 @@ public class CreateEventActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("events");
 
-//        // Storage Initiation
-//        mStorage = FirebaseStorage.getInstance();
-//        storageRef = mStorage.getReferenceFromUrl("gs://project-2202364803731929525.appspot.com");
-//        imageRef = storageRef.child("Images");
-//        imageRef = storageRef.child("Images/host");
+        // Storage Initiation
+        mStorage = FirebaseStorage.getInstance();
         mResultReceiver = new AddressResultReceiver(null);
         context=this;
         fetchType = Constants.USE_ADDRESS_NAME;
+
+        Button selectImage = (Button) findViewById(R.id.button_change_image);
+        selectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Construct a new intent
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType(IMAGE_UNSPECIFIED);
+                // Determine the action of the intent
+                galleryIntent.setAction("android.intent.action.GET_CONTENT");
+
+                // Attempt to enter the gallery
+                try {
+                    startActivityForResult(galleryIntent, REQUEST_CODE_TAKE_FROM_GALLERY);
+
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // Ask Here For Permissions
+                if (checkAndRequestPermissions()) {
+                    // Continue normally if access has been granted
+                }
+            }
+        });
 
 
         Button submit = (Button) findViewById(R.id.save_event);
@@ -105,6 +155,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 String postId=newRef.getKey();
                 current_event.setID(postId);
                 myRef.child(postId).child("id").setValue(postId);
+                saveSnap();
                 Log.d("uniqueID", postId);
                 finish();
 
@@ -179,7 +230,12 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+        // If the picture is saved then update it, maintain all the links
+            mImageCaptureUri = savedInstanceState.getParcelable(URI_INSTANCE_STATE_KEY);
+            mImageTemporal = savedInstanceState.getParcelable(URI_INSTANCE_TEMP_KEY);
+        event_photo = (ImageView) findViewById(R.id.image_event);
 
+        loadSnap();
 
 
     }
@@ -497,6 +553,180 @@ public class CreateEventActivity extends AppCompatActivity {
         return monthNames[month];
     }
 
+
+    /**
+     * Check for all the permissions: CAMERA and STORAGE
+     * Code taken from http://stackoverflow.com/questions/34342816/android-6-0-multiple-permissions
+     * and adapted for my permission cases
+     * @return
+     */
+    private boolean checkAndRequestPermissions() {
+
+        int permissionCamera = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.CAMERA);
+        int permissionWrite = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permissionRead = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        // Make a list of all the permissions needed with granted access
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.CAMERA);
+        }
+        if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (permissionRead != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        // If we don't have any access, then we ask the user for permission
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                    REQUEST_ID_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
+
+    //==================================================================================
+    //                         SAVING AND STORING PROFILE PIC
+    //==================================================================================
+
+    /*
+     *  Code mostly based on the sample from the website
+     */
+    private void loadSnap() {
+            // If the temp address has never been started then just rely on
+            // the permanent image
+            if (mImageTemporal == null) {
+                try {
+                    FileInputStream fis = openFileInput(getString(R.string.event_photo_file_name));
+                    Bitmap nullMap = BitmapFactory.decodeStream(fis);
+                    event_photo.setImageBitmap(nullMap);
+                    fis.close();
+                    return;
+                } catch (IOException e) {
+                    event_photo.setImageResource(R.drawable.activity_three);
+                    return;
+                }
+            }
+
+            // If the temp has been started but it's empty then get the temp value
+            if (mImageTemporal != Uri.EMPTY) {
+                Log.d(TAG, mImageTemporal.toString());
+                event_photo.setImageURI(mImageTemporal);
+                return;
+            }
+
+            try {
+                FileInputStream fis = openFileInput(getString(R.string.event_photo_file_name));
+                Bitmap defaultMap = BitmapFactory.decodeStream(fis);
+                event_photo.setImageBitmap(defaultMap);
+                fis.close();
+                return;
+
+            } catch (IOException e) {
+                event_photo.setImageResource(R.drawable.activity_one);
+                return;
+            }
+        }
+
+    /*
+         *  Saving the picture
+         */
+    private void saveSnap() {
+
+        // Put all the changes to save
+        event_photo.buildDrawingCache();
+        Bitmap saveMap = event_photo.getDrawingCache();
+        try {
+            FileOutputStream fos = openFileOutput(
+                    getString(R.string.event_photo_file_name), MODE_PRIVATE);
+
+            // Use the internal storage
+            saveMap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+
+            return;
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+
+    //===================================================================================
+    //                             PERMISSION CODE REQUESTS
+    //===================================================================================
+    /**
+     * Check for all the permissions: CAMERA and STORAGE
+     * Code taken from http://stackoverflow.com/questions/34342816/android-6-0-multiple-permissions
+     * and adapted for my permission cases
+     * @return
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_ID_MULTIPLE_PERMISSIONS: {
+
+                Map<String, Integer> permis = new HashMap<>();
+                // Initialize the map with all the permissions
+                permis.put(android.Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
+                permis.put(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+                permis.put(android.Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+
+                // Fill with actual results from user
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < permissions.length; i++)
+                        permis.put(permissions[i], grantResults[i]);
+                    // Check for all  permissions
+                    if (permis.get(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                            && permis.get(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                            && permis.get(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        Log.d(TAG, "All permission");
+                        // Continue normally then
+                    }
+                    else {
+                        //Permissions Denied
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)
+                                || ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                || ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            showDialogOK("CAMERA and STORAGE PERMISSIONS reuired for this App",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            switch (which) {
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    checkAndRequestPermissions();
+                                                    break;
+                                                case DialogInterface.BUTTON_NEGATIVE:
+                                                    break;
+                                            }
+                                        }
+                                    });
+                        }
+                        //Permission is always denied
+                        else {
+                            Toast.makeText(this, "Go to settings and enable permissions", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Show the dialog
+    private void showDialogOK(String message, DialogInterface.OnClickListener okListener) {
+        new android.app.AlertDialog.Builder(this).setMessage(message)
+                .setPositiveButton("OK", okListener).setNegativeButton("Cancel", okListener)
+                .create().show();
+    }
 
 
 

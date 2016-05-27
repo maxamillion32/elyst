@@ -83,4 +83,7 @@
     <string name="event_cost">Cost</string>
     <string name="guests">Guests</string>
 
+    <string name="event_photo_file_name">event_photo.png</string>
+
+
 </resources>
