@@ -11,21 +11,26 @@ import android.widget.TextView;
 
 import com.elystapp.elyst.R;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by ERNEL on 5/16/2016.
+ *
  */
 public class CustomAdapter extends ArrayAdapter<String> {
 
-    private static final String TAG = "holla";
 
     private Activity context;
-    private String[][] events;
-    private Integer[] images;
+    private ArrayList<ArrayList<String>> events;
+    private ArrayList<Integer> images;
 
     public CustomAdapter(Activity active,
-                         String[][] names, Integer[] draws) {
-        super(active, R.layout.custom_list, names[1]);
+                         ArrayList<ArrayList<String>> names, ArrayList<Integer> draws, String[] some) {
+
+        super(active, R.layout.custom_list, some);
+        Log.d("whatsinNames", names.toString());
+        Log.d("sizeNames", names.get(0).toString());
         events = names;
         images = draws;
         context = active;
@@ -35,11 +40,9 @@ public class CustomAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        Log.d(TAG, "After inflater");
 
         View rowView = inflater.inflate(R.layout.custom_list, null, true);
 
-        Log.d(TAG, "After inflation");
 
 
         ImageView imageView;
@@ -47,7 +50,6 @@ public class CustomAdapter extends ArrayAdapter<String> {
         TextView date;
         TextView time;
         TextView address;
-        TextView description;
 
         imageView = (ImageView) rowView.findViewById(R.id.image_event);
         title = (TextView) rowView.findViewById(R.id.title_event);
@@ -55,11 +57,11 @@ public class CustomAdapter extends ArrayAdapter<String> {
         time = (TextView) rowView.findViewById(R.id.time_event);
         address = (TextView) rowView.findViewById(R.id.address_event);
 
-        imageView.setImageResource(images[position]);
-        title.setText(events[position][0]);
-        time.setText(events[position][1]);
-        address.setText(events[position][2]);
-        date.setText(events[position][3]);
+        imageView.setImageResource(images.get(position));
+        title.setText(events.get(position).get(0));
+        time.setText(events.get(position).get(1));
+        address.setText(events.get(position).get(2));
+        date.setText(events.get(position).get(3));
 
 
         return rowView;

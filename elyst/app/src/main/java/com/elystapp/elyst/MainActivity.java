@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,10 +20,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.elystapp.elyst.data.EventFacts;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 import com.elystapp.elyst.views.CustomAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,11 +44,14 @@ public class MainActivity extends AppCompatActivity
 
     // Arrays of events
     String[][] eventName = {
-            {"Yoga", "12:30 PM", "The River", "Wednesday 05/26"},
-            {"Booze Cruise", "8:00 AM", "35 West Street, Hanover NH", "05/28/2016"},
-            {"Wine Tasting", "3:30 PM", "Pine, Hanover", "Thursday"},
-            {"Club Dance", "midnight", "GDX", "Saturday Night"}
+            {"Yoga", "12:30 PM", "The River", "Wednesday 05/26","description"},
+            {"Booze Cruise", "8:00 AM", "35 West Street, Hanover NH", "05/28/2016","description"},
+            {"Wine Tasting", "3:30 PM", "Pine, Hanover", "Thursday","description"},
+            {"Club Dance", "midnight", "GDX", "Saturday Night","description"}
     };
+
+    ArrayList<ArrayList<String>> event_details = new ArrayList<ArrayList<String>>();
+    ArrayList<Integer> images=new ArrayList<>();
 
     Integer[] imageArray = {
             R.drawable.activity_one,
@@ -47,12 +61,13 @@ public class MainActivity extends AppCompatActivity
 
     };
 
+    FirebaseDatabase mDatabase;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Toolbar Setup
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         myToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -82,24 +97,77 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //============================== LIST ITEMS ====================================
+        //Database retrieving events
+        mDatabase = FirebaseDatabase.getInstance();
+        myRef = mDatabase.getReference("events");
 
-        CustomAdapter adapter = new CustomAdapter(this, eventName, imageArray);
-        ListView list = (ListView) findViewById(R.id.list_events);
-        list.setAdapter(adapter);
+        final Query events_query=myRef.orderByChild("eDateTimeInMillis");
+        events_query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                EventFacts facts = dataSnapshot.getValue(EventFacts.class);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                Log.d("idontknow", dataSnapshot.getValue().toString());
+                HashMap<String, HashMap> map = (HashMap<String, HashMap>) dataSnapshot.getValue();
+
+                Log.d("FirstElem", map.values().toArray()[0].toString());
+                HashMap innermap = (HashMap) map.values().toArray()[0];
+                Log.d("GettingTitle", innermap.get("title").toString());
+                Log.d("ValueOfTitle", map.get("-KIjgBkksAEhVOnRTM48").get("title").toString());
+                Log.d("ismap", map.get("-KIjgBkksAEhVOnRTM48").toString());
+                Log.d("snapshot", dataSnapshot.getValue().getClass().toString());
+                List<String> events_array=new ArrayList<String>();
+                for (int i = 0; i < map.values().size(); i++) {
+
+                    ArrayList<String> event = new ArrayList<String>();
+                    HashMap temp_map = (HashMap) map.values().toArray()[i];
+                    events_array.add((String) temp_map.get("title"));
+                    event.add((String) temp_map.get("title"));
+                    String time =  temp_map.get("eDateTimeInMillis")+"";
+                    event.add(time);
+                    event.add((String) temp_map.get("location"));
+                    String date = temp_map.get("eDateTimeInMillis")+"";
+                    event.add(date);
+                    event.add((String)temp_map.get("description"));
+                    event_details.add(event);
+                    images.add(R.drawable.activity_one);
+                }
+                String [] events_array_adapt = events_array.toArray(new String[0]);
+
+                //============================== LIST ITEMS ====================================
+                CustomAdapter adapter= new CustomAdapter(MainActivity.this,event_details,images,events_array_adapt);
+                //CustomAdapter adapter = new CustomAdapter(this, eventName, imageArray);
+                ListView list = (ListView) findViewById(R.id.list_events);
+                list.setAdapter(adapter);
+
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        String Slecteditem = event_details.get(+position).get(1);
+                        Log.d(TAG, "Within item click");
+                        Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                // TODO Auto-generated method stub
-                String Slecteditem = eventName[+position][1];
-                Log.d(TAG, "Within item click");
-                Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("idontknow", "The read failed: " + databaseError.getMessage());
 
             }
         });
+
+
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
 
     }
 
@@ -206,5 +274,7 @@ public class MainActivity extends AppCompatActivity
         onBackPressed();
         return true;
     }
+
+
 
 }
