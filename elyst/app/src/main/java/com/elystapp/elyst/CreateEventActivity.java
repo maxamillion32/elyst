@@ -85,11 +85,11 @@ public class CreateEventActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         myRef = mDatabase.getReference("events");
 
-        // Storage Initiation
-        mStorage = FirebaseStorage.getInstance();
-        storageRef = mStorage.getReferenceFromUrl("gs://project-2202364803731929525.appspot.com");
-        imageRef = storageRef.child("Images");
-        imageRef = storageRef.child("Images/host");
+//        // Storage Initiation
+//        mStorage = FirebaseStorage.getInstance();
+//        storageRef = mStorage.getReferenceFromUrl("gs://project-2202364803731929525.appspot.com");
+//        imageRef = storageRef.child("Images");
+//        imageRef = storageRef.child("Images/host");
         mResultReceiver = new AddressResultReceiver(null);
         context=this;
         fetchType = Constants.USE_ADDRESS_NAME;

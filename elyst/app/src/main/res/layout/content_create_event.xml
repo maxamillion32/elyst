@@ -15,7 +15,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/title_event"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_height="@dimen/textview_height"
@@ -30,7 +30,7 @@
             android:id="@+id/location_event"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_below="@+id/title_event"
             android:layout_height="@dimen/textview_height"
             android:textSize="@dimen/font_size"
@@ -45,7 +45,7 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_below="@+id/location_event"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_height"
             android:textSize="@dimen/font_size"
             android:text="@string/date"/>
@@ -59,7 +59,7 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_below="@+id/date_event"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_height"
             android:textSize="@dimen/font_size"
             android:text="@string/time"/>
@@ -73,7 +73,7 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_below="@+id/time_event"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_height"
             android:textSize="@dimen/font_size"
             android:text="@string/guests"/>
@@ -87,7 +87,7 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_below="@+id/attending_event"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_height"
             android:textSize="@dimen/font_size"
             android:text="@string/event_cost"/>
@@ -96,7 +96,7 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_below="@+id/cost_event"
-            android:layout_width="@dimen/textview_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_height"
             android:textSize="@dimen/font_size"
             android:text="@string/description"/>
