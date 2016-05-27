@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-import com.elystapp.elyst.data.EventFacts;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
@@ -32,34 +31,37 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "holla";
 
-    // Arrays of events
-    String[][] eventName = {
-            {"Yoga", "12:30 PM", "The River", "Wednesday 05/26","description"},
-            {"Booze Cruise", "8:00 AM", "35 West Street, Hanover NH", "05/28/2016","description"},
-            {"Wine Tasting", "3:30 PM", "Pine, Hanover", "Thursday","description"},
-            {"Club Dance", "midnight", "GDX", "Saturday Night","description"}
-    };
+//    // Arrays of events
+//    String[][] eventName = {
+//            {"Yoga", "12:30 PM", "The River", "Wednesday 05/26","description"},
+//            {"Booze Cruise", "8:00 AM", "35 West Street, Hanover NH", "05/28/2016","description"},
+//            {"Wine Tasting", "3:30 PM", "Pine, Hanover", "Thursday","description"},
+//            {"Club Dance", "midnight", "GDX", "Saturday Night","description"}
+//    };
 
     ArrayList<ArrayList<String>> event_details = new ArrayList<ArrayList<String>>();
     ArrayList<Integer> images=new ArrayList<>();
 
-    Integer[] imageArray = {
-            R.drawable.activity_one,
-            R.drawable.activity_two,
-            R.drawable.activity_three,
-            R.drawable.activity_four,
-
-    };
+//    Integer[] imageArray = {
+//            R.drawable.activity_one,
+//            R.drawable.activity_two,
+//            R.drawable.activity_three,
+//            R.drawable.activity_four,
+//
+//    };
 
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
@@ -105,17 +107,9 @@ public class MainActivity extends AppCompatActivity
         events_query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                EventFacts facts = dataSnapshot.getValue(EventFacts.class);
 
-                Log.d("idontknow", dataSnapshot.getValue().toString());
                 HashMap<String, HashMap> map = (HashMap<String, HashMap>) dataSnapshot.getValue();
 
-                Log.d("FirstElem", map.values().toArray()[0].toString());
-                HashMap innermap = (HashMap) map.values().toArray()[0];
-                Log.d("GettingTitle", innermap.get("title").toString());
-                Log.d("ValueOfTitle", map.get("-KIjgBkksAEhVOnRTM48").get("title").toString());
-                Log.d("ismap", map.get("-KIjgBkksAEhVOnRTM48").toString());
-                Log.d("snapshot", dataSnapshot.getValue().getClass().toString());
                 List<String> events_array=new ArrayList<String>();
                 for (int i = 0; i < map.values().size(); i++) {
 
@@ -124,10 +118,20 @@ public class MainActivity extends AppCompatActivity
                     events_array.add((String) temp_map.get("title"));
                     event.add((String) temp_map.get("title"));
                     String time =  temp_map.get("eDateTimeInMillis")+"";
-                    event.add(time);
+                    Long time_millis= (Long)temp_map.get("eDateTimeInMillis");
+                    Date date_long=new Date(time_millis);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm a");
+                    sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+
+                    GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
+                    calendar.setTimeInMillis(time_millis);
+                    time=sdf.format(calendar.getTime());
+                    String date_string= time.substring(0,10);
+                    String time_string= time.substring(10,time.length());
+                    event.add(time_string);
                     event.add((String) temp_map.get("location"));
                     String date = temp_map.get("eDateTimeInMillis")+"";
-                    event.add(date);
+                    event.add(date_string);
                     event.add((String)temp_map.get("description"));
                     event_details.add(event);
                     images.add(R.drawable.activity_one);
