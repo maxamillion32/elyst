@@ -29,8 +29,6 @@ public class CustomAdapter extends ArrayAdapter<String> {
                          ArrayList<ArrayList<String>> names, ArrayList<Integer> draws, String[] some) {
 
         super(active, R.layout.custom_list, some);
-        Log.d("whatsinNames", names.toString());
-        Log.d("sizeNames", names.get(0).toString());
         events = names;
         images = draws;
         context = active;

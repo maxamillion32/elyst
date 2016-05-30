@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity
                     event.add((String) temp_map.get("title"));
                     String time =  temp_map.get("eDateTimeInMillis")+"";
                     Long time_millis= (Long)temp_map.get("eDateTimeInMillis");
-                    Date date_long=new Date(time_millis);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm a");
                     sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
 
@@ -130,7 +129,6 @@ public class MainActivity extends AppCompatActivity
                     String time_string= time.substring(10,time.length());
                     event.add(time_string);
                     event.add((String) temp_map.get("location"));
-                    String date = temp_map.get("eDateTimeInMillis")+"";
                     event.add(date_string);
                     event.add((String)temp_map.get("description"));
                     event_details.add(event);

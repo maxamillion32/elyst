@@ -84,6 +84,7 @@
     <string name="guests">Guests</string>
 
     <string name="event_photo_file_name">event_photo.png</string>
+    <string name="datetime">Date and Time</string>
 
 
 </resources>
