@@ -2,7 +2,6 @@ package com.elystapp.elyst;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +9,8 @@ import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,13 +45,11 @@ public class CreateEventActivity extends AppCompatActivity {
     public static EditText title_view;
     public static EditText location_view;
     public static TextView date_view;
-    public static TextView time_view;
     public static EditText cost_view;
     public static EditText guest_view;
     public static EditText description_view;
 
     public static String date_text="Date";
-    public static String time_text="Time";
     public String location_input="";
 
 
@@ -228,62 +222,6 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * class that handles the date picker dialog
-     */
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // set the exercise entry to have the date chosen by the user
-            current_event.setDate(year, month, day);
-            Log.d("picked date", current_event.getDateTime().toString());
-            date_text="Date: "+ day+ " "+ getMonthfromInt(month)+" "+year;
-            date_view.setText(date_text);
-            /**
-             * class that handles the time picker dialog
-             */
-            class TimePickerFragment extends DialogFragment
-                    implements TimePickerDialog.OnTimeSetListener {
-
-                @NonNull
-                @Override
-                public Dialog onCreateDialog(Bundle savedInstanceState) {
-                    // Use the current time as the default values for the picker
-                    final Calendar c = Calendar.getInstance();
-                    int hour = c.get(Calendar.HOUR_OF_DAY);
-                    int minute = c.get(Calendar.MINUTE);
-
-                    // Create a new instance of TimePickerDialog and return it
-                    return new TimePickerDialog(getActivity(), this, hour, minute,
-                            DateFormat.is24HourFormat(getActivity()));
-                }
-
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    // set the time for the exercise entry as the time chosen by the user
-                    current_event.setTime(hourOfDay, minute);
-                    Log.d("time picked", current_event.getDateTime().toString());
-                    time_text="Time: "+ hourOfDay+ ":"+ minute;
-                    time_view.setText(time_text);
-                }
-            }
-
-        }
-    }
-
 
     public void updateAddress(){
         Intent intent = new Intent(CreateEventActivity.this, GeocodeAddressIntentService.class);
@@ -293,7 +231,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
             intent.putExtra(Constants.LOCATION_NAME_DATA_EXTRA,current_event.getLocation());
         }
-        //Toast.makeText(context, "Your request has been submitted",Toast.LENGTH_SHORT).show();
         Log.e("create_event", "Starting Service");
         startService(intent);
     }
