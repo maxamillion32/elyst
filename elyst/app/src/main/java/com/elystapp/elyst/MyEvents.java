@@ -56,10 +56,11 @@ public class MyEvents extends AppCompatActivity {
         });
 
         // Create a fragment list in order - fill it up
-        myEventsFragments = new ArrayList<>();
+        myEventsFragments = new ArrayList<Fragment>();
         myEventsFragments.add(new HostingFragment());
         myEventsFragments.add(new AttendingFragment());
         myEventsFragments.add(new WatchlistFragment());
+
 
         // Use Fragment adapter to bind the slidingTablLayout and viewpager
         myEventsAdapter = new MyEventsViewPagerAdapter(getFragmentManager(),

@@ -2,20 +2,23 @@
 <!-- Only can put one thing in a frame layout - in this
 case we are putting a fragment -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingLeft="@dimen/activity_left_margin"-->
+    <!--android:paddingRight="@dimen/activity_right_margin">-->
+
+    <!--<fragment-->
+        <!--android:id="@+id/titles"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:paddingLeft="@dimen/activity_left_margin"-->
+        <!--android:paddingRight="@dimen/activity_right_margin"-->
+        <!--class="com.elystapp.elyst.MyEvents" />-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_left_margin"
-    android:paddingRight="@dimen/activity_right_margin">
-
-    <fragment
-        android:id="@+id/titles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_left_margin"
-        android:paddingRight="@dimen/activity_right_margin"
-        class="com.elystapp.elyst.MyEvents" />
-
+    android:layout_height="match_parent">
     <ListView
         android:id="@+id/list_events"
         android:layout_width="match_parent"
@@ -23,4 +26,6 @@ case we are putting a fragment -->
         android:divider="@layout/divider_list"
         android:dividerHeight="3sp"/>
 
-</FrameLayout>
+<!--</FrameLayout>-->
+<!---->
+    </LinearLayout>

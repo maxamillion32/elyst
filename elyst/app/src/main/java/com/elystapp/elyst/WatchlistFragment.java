@@ -2,7 +2,7 @@ package com.elystapp.elyst;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,17 +44,21 @@ public class WatchlistFragment extends Fragment {
     ArrayList<Integer> images=new ArrayList<>();
 
     Integer[] imageArray = {
-            R.drawable.activity_one,
-            R.drawable.activity_two,
-            R.drawable.activity_three,
-            R.drawable.activity_four,
-            R.drawable.activity_five,
-            R.drawable.activity_six,
-            R.drawable.activity_seven,
-            R.drawable.activity_eight,
-            R.drawable.activity_nine
+            R.drawable.activity_four_min,
+            R.drawable.activity_two_min,
+            R.drawable.activity_one_min,
+            R.drawable.activity_eleven_min,
+            R.drawable.activity_ten_min
 
     };
+    Integer[] category_image={
+            R.drawable.activity_four_min,
+            R.drawable.activity_two_min,
+            R.drawable.activity_one_min,
+            R.drawable.activity_eleven_min,
+            R.drawable.activity_ten_min
+    };
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,12 +148,15 @@ public class WatchlistFragment extends Fragment {
 
                 }
                 //list adapter stuff
-                if(event_details.size()<=imageArray.length) {
-                    images.add(imageArray[event_details.size() - 1]);
-                }
-                else{
-                    images.add(imageArray[imageArray.length-1]);
-                }
+                String cat_text=""+map.get("category");
+                int cat=Integer.valueOf(cat_text);
+                images.add(category_image[cat]);
+//                if(event_details.size()<=imageArray.length) {
+//                    images.add(imageArray[event_details.size() - 1]);
+//                }
+//                else{
+//                    images.add(imageArray[imageArray.length-1]);
+//                }
                 String[] events_array_adapt = events_array.toArray(new String[0]);
 
                 //============================== LIST ITEMS ====================================
