@@ -8,11 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.elystapp.elyst.testing.code.TestDataFragmentList;
 import com.elystapp.elyst.views.CustomAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -68,7 +65,7 @@ public class WatchlistFragment extends Fragment {
                 container, false);
 
         // Now we should initialize the listview
-        ListView listview = (ListView) view.findViewById(R.id.list_events);
+        final ListView listview = (ListView) view.findViewById(R.id.list_events);
 
 
         ////////////////////////////////// Database
@@ -156,19 +153,17 @@ public class WatchlistFragment extends Fragment {
                 String[] events_array_adapt = events_array.toArray(new String[0]);
 
                 //============================== LIST ITEMS ====================================
-                CustomAdapter adapter = new CustomAdapter(this, event_details, images, events_array_adapt);
-                //CustomAdapter adapter = new CustomAdapter(this, eventName, imageArray);
-                ListView list = (ListView) findViewById(R.id.list_events);
-                list.setAdapter(adapter);
+                CustomAdapter adapter = new CustomAdapter(getActivity(), event_details, images, events_array_adapt);
+                listview.setAdapter(adapter);
 
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //String Slecteditem = event_details.get(+position).get(1);
                         //Log.d(TAG, "Within item click");
                         //Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
-                        Intent details=new Intent(this,EventDetailsActivity.class);
+                        Intent details=new Intent(getActivity(),EventDetailsActivity.class);
                         //Log.d("whichID", event_details.get(+position).get(5) + " test");
                         String event_key=event_details.get(+position).get(5);
                         details.putExtra(EventDetailsActivity.EXTRA_POST_KEY,event_key);
@@ -205,17 +200,15 @@ public class WatchlistFragment extends Fragment {
                 String[] events_array_adapt = events_array.toArray(new String[0]);
 
                 //============================== LIST ITEMS ====================================
-                CustomAdapter adapter = new CustomAdapter(MainActivity.this, event_details, images, events_array_adapt);
-                //CustomAdapter adapter = new CustomAdapter(this, eventName, imageArray);
-                ListView list = (ListView) findViewById(R.id.list_events);
-                list.setAdapter(adapter);
+                CustomAdapter adapter = new CustomAdapter(getActivity(), event_details, images, events_array_adapt);
+                listview.setAdapter(adapter);
 
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Intent details=new Intent(MyEvents.this,EventDetailsActivity.class);
+                        Intent details=new Intent(getActivity(),EventDetailsActivity.class);
                         String event_key=event_details.get(+position).get(5);
                         details.putExtra(EventDetailsActivity.EXTRA_POST_KEY, event_key);
                         startActivity(details);
@@ -239,13 +232,6 @@ public class WatchlistFragment extends Fragment {
 
             }
         });
-    }
-
-        CustomAdapter adapterCustom = new CustomAdapter(this, event_details, imageArray, events_array_adapt);
-        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-        //        android.R.layout.simple_list_item_1, event_details);
-
-        listview.setAdapter(adapterCustom);
 
         return view;
     }
@@ -283,14 +269,4 @@ public class WatchlistFragment extends Fragment {
         outState.putInt("curChoice", mCurrentPosition);
     }
 
-    // If the user clicks on an item in the list (e.g., Party2 then the
-    // onListItemClick() method is called. It calls a helper function in
-    // this case.
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-
-        Toast.makeText(getActivity(),
-                TestDataFragmentList.EVENTS[position] + " is selected",
-                Toast.LENGTH_LONG).show();
-    }
 }
