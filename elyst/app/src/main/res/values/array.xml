@@ -15,4 +15,11 @@
         <item>Guests</item>
         <item>Description</item>
     </string-array>
+    <string-array name="categories">
+        <item>Music</item>
+        <item>Food and Drink</item>
+        <item>Travel and Outdoor</item>
+        <item>Arts, Film and Media</item>
+        <item>Community and Charity</item>
+    </string-array>
 </resources>

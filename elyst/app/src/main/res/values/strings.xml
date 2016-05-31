@@ -85,6 +85,7 @@
 
     <string name="event_photo_file_name">event_photo.png</string>
     <string name="datetime">Date and Time</string>
+    <string name="category">Category:</string>
 
 
 </resources>

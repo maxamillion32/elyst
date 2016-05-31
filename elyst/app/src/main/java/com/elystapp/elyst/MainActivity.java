@@ -55,13 +55,18 @@ public class MainActivity extends AppCompatActivity
     ArrayList<ArrayList<String>> event_details = new ArrayList<ArrayList<String>>();
     ArrayList<Integer> images=new ArrayList<>();
 
-//    Integer[] imageArray = {
-//            R.drawable.activity_one,
-//            R.drawable.activity_two,
-//            R.drawable.activity_three,
-//            R.drawable.activity_four,
-//
-//    };
+    Integer[] imageArray = {
+            R.drawable.activity_one,
+            R.drawable.activity_two,
+            R.drawable.activity_three,
+            R.drawable.activity_four,
+            R.drawable.activity_five,
+            R.drawable.activity_six,
+            R.drawable.activity_seven,
+            R.drawable.activity_eight,
+            R.drawable.activity_nine
+
+    };
 
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
@@ -177,7 +182,12 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 //list adapter stuff
-                images.add(R.drawable.activity_one);
+                if(event_details.size()<=imageArray.length) {
+                    images.add(imageArray[event_details.size() - 1]);
+                }
+                else{
+                    images.add(imageArray[imageArray.length-1]);
+                }
                 String[] events_array_adapt = events_array.toArray(new String[0]);
 
                 //============================== LIST ITEMS ====================================
@@ -189,11 +199,16 @@ public class MainActivity extends AppCompatActivity
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        String Slecteditem = event_details.get(+position).get(1);
-                        Log.d(TAG, "Within item click");
-                        Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //String Slecteditem = event_details.get(+position).get(1);
+                        //Log.d(TAG, "Within item click");
+                        //Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                        Intent details=new Intent(MainActivity.this,EventDetailsActivity.class);
+                        //Log.d("whichID", event_details.get(+position).get(5) + " test");
+                        String event_key=event_details.get(+position).get(5);
+                        details.putExtra(EventDetailsActivity.EXTRA_POST_KEY,event_key);
+                        details.putExtra(EventDetailsActivity.IMAGE_KEY,imageArray[+position]);
+                        startActivity(details);
 
                     }
                 });
@@ -235,9 +250,10 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        String Slecteditem = event_details.get(+position).get(1);
-                        Log.d(TAG, "Within item click");
-                        Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                        Intent details=new Intent(MainActivity.this,EventDetailsActivity.class);
+                        String event_key=event_details.get(+position).get(5);
+                        details.putExtra(EventDetailsActivity.EXTRA_POST_KEY, event_key);
+                        startActivity(details);
 
                     }
                 });

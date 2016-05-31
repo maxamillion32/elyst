@@ -12,37 +12,66 @@
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_marginTop="?attr/actionBarSize"
         tools:context="com.elystapp.elyst.EventDetailsActivity"
         tools:showIn="@layout/activity_event_details">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/title"
+                android:text="@string/title_event"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
             <TextView
                 android:id="@+id/location"
+                android:text="@string/location"
                 android:layout_below="@+id/title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
             <TextView
                 android:id="@+id/time"
+                android:text="@string/datetime"
                 android:layout_below="@+id/location"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
             <TextView
                 android:id="@+id/attending"
+                android:text="@string/guests"
                 android:layout_below="@+id/time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
             <TextView
                 android:id="@+id/description"
+                android:text="@string/description"
                 android:layout_below="@+id/attending"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:textSize="@dimen/font_size"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:id="@+id/details_image"
+                android:src="@drawable/activity_one"
+                android:scaleType="fitXY"
+                android:contentDescription="image of the event"
+                android:layout_below="@+id/description" />
         </RelativeLayout>
     </ScrollView>
     <LinearLayout
