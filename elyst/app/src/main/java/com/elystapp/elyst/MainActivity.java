@@ -67,13 +67,6 @@ public class MainActivity extends AppCompatActivity
             R.drawable.activity_nine
 
     };
-    Integer[] category_image={
-            R.drawable.activity_four_min,
-            R.drawable.activity_two_min,
-            R.drawable.activity_one_min,
-            R.drawable.activity_eleven_min,
-            R.drawable.activity_ten_min
-    };
 
     FirebaseDatabase mDatabase;
     DatabaseReference myRef;
@@ -189,15 +182,12 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 //list adapter stuff
-                String cat_text=""+map.get("category");
-                int cat=Integer.valueOf(cat_text);
-                images.add(category_image[cat]);
-//                if(event_details.size()<=imageArray.length) {
-//                    images.add(imageArray[event_details.size() - 1]);
-//                }
-//                else{
-//                    images.add(imageArray[imageArray.length-1]);
-//                }
+                if(event_details.size()<=imageArray.length) {
+                    images.add(imageArray[event_details.size() - 1]);
+                }
+                else{
+                    images.add(imageArray[imageArray.length-1]);
+                }
                 String[] events_array_adapt = events_array.toArray(new String[0]);
 
                 //============================== LIST ITEMS ====================================

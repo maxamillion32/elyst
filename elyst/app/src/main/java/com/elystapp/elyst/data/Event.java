@@ -30,7 +30,6 @@ public class Event {
     private Integer eGuests;
     private String ID;
     private Host eHost;
-    private Integer category;
 
     // Helping Fields
     private Address GPS;
@@ -46,7 +45,6 @@ public class Event {
         this.ID = "";
         this.eHost= new Host();
         this.GPS=null;
-        this.category=-1;
     }
 
     public Integer getImage() {
@@ -160,13 +158,5 @@ public class Event {
 
     public void setLocationGPS(Address locationGPS) {
         this.GPS = locationGPS;
-    }
-
-    public Integer getCategory() {
-        return category;
-    }
-
-    public void setCategory(Integer category) {
-        this.category = category;
     }
 }

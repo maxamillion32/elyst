@@ -16,4 +16,11 @@ case we are putting a fragment -->
         android:paddingRight="@dimen/activity_right_margin"
         class="com.elystapp.elyst.MyEvents" />
 
+    <ListView
+        android:id="@+id/list_events"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@layout/divider_list"
+        android:dividerHeight="3sp"/>
+
 </FrameLayout>

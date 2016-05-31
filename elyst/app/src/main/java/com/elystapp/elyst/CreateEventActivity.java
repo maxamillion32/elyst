@@ -13,12 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -51,11 +48,9 @@ public class CreateEventActivity extends AppCompatActivity {
     public static EditText cost_view;
     public static EditText guest_view;
     public static EditText description_view;
-    public Spinner category;
 
     public static String date_text="Date";
     public String location_input="";
-    public Integer selected_val;
 
 
 
@@ -80,29 +75,6 @@ public class CreateEventActivity extends AppCompatActivity {
         mResultReceiver = new AddressResultReceiver(null);
         context=this;
         fetchType = Constants.USE_ADDRESS_NAME;
-
-        category=(Spinner)findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.categories, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        category.setAdapter(adapter);
-        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
-
-                 selected_val=category.getSelectedItemPosition();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                //  Auto-generated method stub
-
-            }
-        });
-
 
         Button submit = (Button) findViewById(R.id.save_event);
         if(submit!=null) {
@@ -132,7 +104,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     String description_text = description_view.getText().toString();
                     current_event.setDescription(description_text);
                     Log.d("description set", current_event.getDescription());
-                    current_event.setCategory(selected_val);
+
                     DatabaseReference newRef = myRef.push();
                     newRef.setValue(current_event);
                     String postId = newRef.getKey();
