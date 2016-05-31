@@ -39,6 +39,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     private TextView description;
     private ImageView image;
     private ValueEventListener mPostListener;
+    private int guest_count=-1;
+    private boolean clicked=false;
 
 
 
@@ -61,23 +63,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         attending = (TextView)findViewById(R.id.attending);
         description = (TextView)findViewById(R.id.description);
         image=(ImageView)findViewById(R.id.details_image);
-        Button watchlist = (Button)findViewById(R.id.watchlist);
-        watchlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Log.d("Watchlist","tapped");
-
-            }
-        });
-        Button attend= (Button)findViewById(R.id.attend);
-        attend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Attend","tapped");
-
-            }
-        });
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);
@@ -90,6 +76,41 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Initialize Database
         mPostReference = FirebaseDatabase.getInstance().getReference()
                 .child("events").child(mPostKey);
+
+        Button watchlist = (Button)findViewById(R.id.watchlist);
+        watchlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("Watchlist","tapped");
+
+            }
+        });
+        final Button attend= (Button)findViewById(R.id.attend);
+        attend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("Attend","tapped");
+                if(!clicked) {
+                    if (guest_count != -1) {
+                        mPostReference.child("guests").setValue(guest_count + 1);
+                    }
+                    //attend.setVisibility(View.GONE);
+                    attend.setText("Unattend");
+                }
+                else {
+                    if (guest_count != -1) {
+                        mPostReference.child("guests").setValue(guest_count - 1);
+                    }
+                    attend.setText("Attend");
+                }
+                clicked=!clicked;
+
+            }
+        });
+
+
 
     }
     @Override
@@ -120,6 +141,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 String time_string = time2.substring(10, time2.length());
                 time.setText("Date & Time: "+time2);
                 String guest=""+ map.get("guests");
+                guest_count=Integer.valueOf(guest);
                 attending.setText("Guests: "+guest);
                 description.setText("Description: "+(String)map.get("description"));
 
