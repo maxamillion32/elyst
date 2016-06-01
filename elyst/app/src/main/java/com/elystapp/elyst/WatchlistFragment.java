@@ -96,89 +96,93 @@ public class WatchlistFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 HashMap map = (HashMap) dataSnapshot.getValue();
                 //add one element to the list adapter array
-                events_array.add((String) map.get("title"));
-                //make a new event arraylist
-                ArrayList<String> event = new ArrayList<>();
-                //add the event title to the list
-                event.add((String) map.get("title"));
-                String time;
-                //get nicely formatted time and date from the milliseconds
-                String string_time = "" + map.get("eDateTimeInMillis");
-                Long time_millis = Long.valueOf(string_time);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm a", Locale.US);
-                sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
-                GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
-                calendar.setTimeInMillis(time_millis);
-                time = sdf.format(calendar.getTime());
-                String date_string = time.substring(0, 10);
-                String time_string = time.substring(10, time.length());
-                //add the time of the event to the list
-                event.add(time_string);
-                //add the location of the event to the list
-                event.add((String) map.get("location"));
-                //add the date of the event to the list
-                event.add(date_string);
-                //add the description of the event to the list
-                event.add((String) map.get("description"));
-                //add the id of the event to the list
-                //this is not displayed in the listview, but we need it as a reference when removing elements
-                event.add((String)map.get("id"));
-                //if we're adding the first event, simply add it
-                if(event_details.isEmpty()) {
-                    event_details.add(event);
-                }
-                else{
-                    //if it's not the first event, find the right position to add it to
-                    //the parameter s is the id of the previous event, so find the position of that event
-                    //and add it after it
-                    boolean found=false;
-                    for(int i = 0;i<event_details.size();i++) {
-                        ArrayList<String> event_item = event_details.get(i);
-                        if (event_item.contains(s)) {
-                            found=true;
-                            event_details.add(i+1,event);
-                            break;
+
+                String display = ""+map.get("watch_list");
+                if(display.equals("true")) {
+                    events_array.add((String) map.get("title"));
+                    //make a new event arraylist
+                    ArrayList<String> event = new ArrayList<>();
+                    //add the event title to the list
+                    event.add((String) map.get("title"));
+                    String time;
+                    //get nicely formatted time and date from the milliseconds
+                    String string_time = "" + map.get("eDateTimeInMillis");
+                    Long time_millis = Long.valueOf(string_time);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm a", Locale.US);
+                    sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+                    GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
+                    calendar.setTimeInMillis(time_millis);
+                    time = sdf.format(calendar.getTime());
+                    String date_string = time.substring(0, 10);
+                    String time_string = time.substring(10, time.length());
+                    //add the time of the event to the list
+                    event.add(time_string);
+                    //add the location of the event to the list
+                    event.add((String) map.get("location"));
+                    //add the date of the event to the list
+                    event.add(date_string);
+                    //add the description of the event to the list
+                    event.add((String) map.get("description"));
+                    //add the id of the event to the list
+                    //this is not displayed in the listview, but we need it as a reference when removing elements
+                    event.add((String) map.get("id"));
+                    //if we're adding the first event, simply add it
+                    if (event_details.isEmpty()) {
+                        event_details.add(event);
+                    } else {
+                        //if it's not the first event, find the right position to add it to
+                        //the parameter s is the id of the previous event, so find the position of that event
+                        //and add it after it
+                        boolean found = false;
+                        for (int i = 0; i < event_details.size(); i++) {
+                            ArrayList<String> event_item = event_details.get(i);
+                            if (event_item.contains(s)) {
+                                found = true;
+                                event_details.add(i + 1, event);
+                                break;
+                            }
+
+                        }
+                        //if the previous event was not found, it means this will be added to the top of the list
+                        if (!found) {
+                            event_details.add(0, event);
                         }
 
                     }
-                    //if the previous event was not found, it means this will be added to the top of the list
-                    if(!found){
-                        event_details.add(0,event);
-                    }
+                    //list adapter stuff
+                    String cat_text = "" + map.get("category");
+                    int cat = Integer.valueOf(cat_text);
+                    images.add(category_image[cat]);
 
-                }
-                //list adapter stuff
-                String cat_text=""+map.get("category");
-                int cat=Integer.valueOf(cat_text);
-                images.add(category_image[cat]);
 //                if(event_details.size()<=imageArray.length) {
 //                    images.add(imageArray[event_details.size() - 1]);
 //                }
 //                else{
 //                    images.add(imageArray[imageArray.length-1]);
 //                }
-                String[] events_array_adapt = events_array.toArray(new String[0]);
+                    String[] events_array_adapt = events_array.toArray(new String[0]);
 
-                //============================== LIST ITEMS ====================================
-                CustomAdapter adapter = new CustomAdapter(getActivity(), event_details, images, events_array_adapt);
-                listview.setAdapter(adapter);
+                    //============================== LIST ITEMS ====================================
+                    CustomAdapter adapter = new CustomAdapter(getActivity(), event_details, images, events_array_adapt);
+                    listview.setAdapter(adapter);
 
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //String Slecteditem = event_details.get(+position).get(1);
-                        //Log.d(TAG, "Within item click");
-                        //Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
-                        Intent details=new Intent(getActivity(),EventDetailsActivity.class);
-                        //Log.d("whichID", event_details.get(+position).get(5) + " test");
-                        String event_key=event_details.get(+position).get(5);
-                        details.putExtra(EventDetailsActivity.EXTRA_POST_KEY,event_key);
-                        details.putExtra(EventDetailsActivity.IMAGE_KEY,imageArray[+position]);
-                        startActivity(details);
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //String Slecteditem = event_details.get(+position).get(1);
+                            //Log.d(TAG, "Within item click");
+                            //Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                            Intent details = new Intent(getActivity(), EventDetailsActivity.class);
+                            //Log.d("whichID", event_details.get(+position).get(5) + " test");
+                            String event_key = event_details.get(+position).get(5);
+                            details.putExtra(EventDetailsActivity.EXTRA_POST_KEY, event_key);
+                            details.putExtra(EventDetailsActivity.IMAGE_KEY, imageArray[+position]);
+                            startActivity(details);
 
-                    }
-                });
+                        }
+                    });
+                }
             }
 
             @Override

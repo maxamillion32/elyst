@@ -24,6 +24,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 import com.elystapp.elyst.views.CustomAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -214,7 +216,7 @@ public class MainActivity extends AppCompatActivity
                         //Log.d("whichID", event_details.get(+position).get(5) + " test");
                         String event_key=event_details.get(+position).get(5);
                         details.putExtra(EventDetailsActivity.EXTRA_POST_KEY,event_key);
-                        details.putExtra(EventDetailsActivity.IMAGE_KEY,imageArray[+position]);
+                        details.putExtra(EventDetailsActivity.IMAGE_KEY,images.get(position));
                         startActivity(details);
 
                     }
@@ -316,16 +318,27 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.menuitem_search:
-                Toast.makeText(this, "Search",
-                        Toast.LENGTH_SHORT).show();
+                Intent find = new Intent(MainActivity.this, FindEventsActivity.class);
+                startActivity(find);
                 return true;
             case R.id.menuitem_settings:
-                Toast.makeText(this, "Settings",
-                        Toast.LENGTH_SHORT).show();
+                Intent settings=new Intent(MainActivity.this,SettingsActivity.class);
+                startActivity(settings);
                 return true;
             case R.id.menuitem_log_out:
-                Toast.makeText(this, "Log Out",
-                        Toast.LENGTH_SHORT).show();
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user==null) {
+                    Toast.makeText(this, "Sign In",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(this, "Sign Out",
+                            Toast.LENGTH_SHORT).show();
+                    FirebaseAuth.getInstance().signOut();
+                    Intent signin=new Intent(MainActivity.this,SignUpActivity.class);
+                    startActivity(signin);
+                }
                 return true;
         }
 
@@ -354,15 +367,49 @@ public class MainActivity extends AppCompatActivity
             startActivity(settings);
 
         } else if (id == R.id.drawer_my_events) {
-            intent.setClass(this, MyEvents.class);
-            startActivity(intent);
+
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user==null) {
+                Toast.makeText(this, "Sign In",
+                        Toast.LENGTH_SHORT).show();
+                Intent sign_in =new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(sign_in);
+            }
+            else {
+                Intent intent2 = new Intent(MainActivity.this, MyEvents.class);
+                startActivity(intent2);
+            }
+
         } else if (id == R.id.drawer_create_event) {
-            Intent create = new Intent(MainActivity.this, CreateEventActivity.class);
-            startActivity(create);
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user==null) {
+                Toast.makeText(this, "Sign In",
+                        Toast.LENGTH_SHORT).show();
+                Intent sign_in =new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(sign_in);
+            }
+            else {
+                Intent create = new Intent(MainActivity.this, CreateEventActivity.class);
+                startActivity(create);
+            }
+
 
         } else if (id == R.id.drawer_account_preferences) {
-            Intent preference = new Intent(MainActivity.this, AccountPreferencesActivity.class);
-            startActivity(preference);
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user==null) {
+                Toast.makeText(this, "Sign In",
+                        Toast.LENGTH_SHORT).show();
+                Intent sign_in =new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(sign_in);
+            }
+            else {
+                Intent preference = new Intent(MainActivity.this, AccountPreferencesActivity.class);
+                startActivity(preference);
+            }
+
 
 
         } else if (id == R.id.drawer_about) {

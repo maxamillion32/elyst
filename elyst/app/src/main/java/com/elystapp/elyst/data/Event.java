@@ -31,6 +31,9 @@ public class Event {
     private String ID;
     private Host eHost;
     private Integer category;
+    private boolean watch_list;
+    private boolean attend;
+    private String uid;
 
 
     // Helping Fields
@@ -48,6 +51,9 @@ public class Event {
         this.eHost= new Host();
         this.GPS=null;
         this.category=-1;
+        this.watch_list=false;
+        this.attend=false;
+        this.uid="";
 
     }
 
@@ -170,5 +176,29 @@ public class Event {
 
     public void setCategory(Integer category) {
         this.category = category;
+    }
+
+    public boolean isWatch_list() {
+        return watch_list;
+    }
+
+    public void setWatch_list(boolean watch_list) {
+        this.watch_list = watch_list;
+    }
+
+    public boolean isAttend() {
+        return attend;
+    }
+
+    public void setAttend(boolean attend) {
+        this.attend = attend;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

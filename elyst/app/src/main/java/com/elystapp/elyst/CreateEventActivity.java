@@ -24,6 +24,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.elystapp.elyst.data.Event;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -133,7 +135,8 @@ public class CreateEventActivity extends AppCompatActivity {
                     current_event.setDescription(description_text);
                     Log.d("description set", current_event.getDescription());
                     current_event.setCategory(selected_val);
-
+                    current_event.setAttend(false);
+                    current_event.setWatch_list(false);
                     DatabaseReference newRef = myRef.push();
                     newRef.setValue(current_event);
                     String postId = newRef.getKey();

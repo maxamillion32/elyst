@@ -42,6 +42,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private int guest_count=-1;
 
     private boolean clicked=false;
+    private boolean tapped =false;
 
 
 
@@ -76,12 +77,22 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Initialize Database
         mPostReference = FirebaseDatabase.getInstance().getReference()
                 .child("events").child(mPostKey);
-        Button watchlist = (Button)findViewById(R.id.watchlist);
+        final Button watchlist = (Button)findViewById(R.id.watchlist);
         watchlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Log.d("Watchlist","tapped");
+                if(!tapped){
+                    watchlist.setText("Unwatch");
+                    mPostReference.child("watch_list").setValue(true);
+
+                }
+                else {
+                    watchlist.setText("Watchlist");
+                    mPostReference.child("watch_list").setValue(false);
+                }
+                tapped=!tapped;
 
             }
         });
@@ -93,6 +104,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 if(!clicked) {
                     if (guest_count != -1) {
                         mPostReference.child("guests").setValue(guest_count + 1);
+                        mPostReference.child("attend").setValue(true);
                     }
                     //attend.setVisibility(View.GONE);
                     attend.setText("Unattend");
@@ -100,6 +112,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 else {
                     if (guest_count != -1) {
                         mPostReference.child("guests").setValue(guest_count - 1);
+                        mPostReference.child("attend").setValue(false);
                     }
                     attend.setText("Attend");
                 }

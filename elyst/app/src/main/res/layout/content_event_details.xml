@@ -19,6 +19,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/title"
@@ -70,6 +72,7 @@
                 android:id="@+id/details_image"
                 android:src="@drawable/activity_one"
                 android:scaleType="fitXY"
+                android:layout_centerVertical="true"
                 android:contentDescription="image of the event"
                 android:layout_below="@+id/description" />
         </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.elystapp.elyst;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.elystapp.elyst.views.SlidingTabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -85,19 +88,35 @@ public class MyEvents extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.menuitem_search:
-                Toast.makeText(this, "Search",
-                        Toast.LENGTH_SHORT).show();
+                Intent find = new Intent(MyEvents.this, FindEventsActivity.class);
+                startActivity(find);
                 return true;
             case R.id.menuitem_settings:
-                Toast.makeText(this, "Settings",
-                        Toast.LENGTH_SHORT).show();
+                Intent settings=new Intent(MyEvents.this,SettingsActivity.class);
+                startActivity(settings);
                 return true;
             case R.id.menuitem_log_out:
-                Toast.makeText(this, "Settings",
-                        Toast.LENGTH_SHORT).show();
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user==null) {
+                    Toast.makeText(this, "Sign In",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(this, "Sign Out",
+                            Toast.LENGTH_SHORT).show();
+                    FirebaseAuth.getInstance().signOut();
+                    Intent signin=new Intent(MyEvents.this,SignUpActivity.class);
+                    startActivity(signin);
+                }
         }
 
         return super.onOptionsItemSelected(item);
     }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
 }
